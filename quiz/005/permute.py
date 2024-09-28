@@ -75,7 +75,7 @@ if __name__ == "__main__":
      append     append     append
      [1, 2, 3] [2, 1, 3] [3, 2, 1]
     """
-    array = [1, 1, 2]
+    array = [3, 3]
     # array = [1, 2, 3]
     # print(permute_unique(array))
     print(permute_duplicates(array))

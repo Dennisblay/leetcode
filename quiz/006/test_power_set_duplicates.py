@@ -5,7 +5,7 @@ from power_set import power_set_recur_duplicates
 class TestSubsetsWithDup(unittest.TestCase):
 
     def test_unique_elements(self):
-        self.assertCountEqual(power_set_recur_duplicates([1, 2, 3]), [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]],
+       self.assertCountEqual(power_set_recur_duplicates([1, 2, 3]), [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]],
                               "Failed to handle array with unique elements.")
 
     def test_with_duplicates(self):
