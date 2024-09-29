@@ -10,7 +10,7 @@ def merge(nums1: List[int], m: int, nums2: List[int], n: int):
     j = n - 1  # Last index of nums2
 
     while j >= 0:  # Only need to worry about nums2 because nums1 is already in place
-        if nums1[i] > nums2[j]:
+        if i >= 0 and nums1[i] > nums2[j]:
             nums1[combined] = nums1[i]  # Move larger element from nums1
             i -= 1
         else:
