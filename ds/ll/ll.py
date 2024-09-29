@@ -2,12 +2,12 @@ from typing import Optional
 
 
 class Node:
-    def __init__(self, value: int):
+    def __init__(self, value: int, next: Optional['Node'] = None):
         self.value = value
-        self.next: Optional['Node'] = None
+        self.next: Optional['Node'] = next
 
     def __str__(self):
-        return f"Node({self.value}, {self.next})"
+        return f"Node(value: {self.value}, next: {self.next})"
 
 
 class LinkedList:
@@ -93,12 +93,53 @@ class LinkedList:
             return True
         return False
 
+    def insert(self, index: int, value: int):
+        if index < 0 or index >= self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length - 1:
+            return self.append(value)
+        prev = self.get(index - 1)
+        curr = prev.next
+        prev.next = Node(value=value, next=curr)
+        self.length += 1
+        return True
+
+    def remove(self, index: int):
+        if index < 0 or index >= self.length:
+            return None
+        if index == 0:
+            return self.pop_first()
+        if index == self.length - 1:
+            return self.pop()
+        prev = self.get(index - 1)
+        temp = prev.next
+        prev.next = prev.next.next
+        temp.next = None
+        self.length -= 1
+        return temp
+
+    def reverse(self):
+        current = self.head
+        self.head = self.tail
+        self.tail = current
+        after = current.next
+        before = None
+        for _ in range(self.length):
+            after = current.next
+            current.next = before
+            before = current
+            current = after
+
 
 if __name__ == "__main__":
     ll = LinkedList(0)
     for i in range(1, 10):
         ll.append(i)
 
-    ll.set_value(0, 99)
+    # print(ll.remove(3))
 
+    ll.print()
+    ll.reverse()
     ll.print()
