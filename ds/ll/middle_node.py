@@ -14,7 +14,6 @@ class LinkedList:
         new_node = Node(value=value)
         self.head: Optional['Node'] = new_node
         self.tail: Optional['Node'] = new_node
-        self.length = 1
 
     def print(self):
         temp = self.head
@@ -32,103 +31,28 @@ class LinkedList:
         else:
             self.tail.next = new_node
             self.tail = new_node
-        self.length += 1
         return True
 
     def make_empty(self):
         self.head = None
         self.tail = None
-        self.length = 0
 
-    def pop(self):
+    def find_middle_node(self) -> Optional['Node']:
         if self.head is None:
             return None
-        temp = self.head
-        prev = self.head
-        while temp.next is not None:
-            prev = temp
-            temp = temp.next
-        self.tail = prev
-        self.tail.next = None
-        self.length -= 1
-        if self.length == 0:
-            self.head = None
-            self.tail = None
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
 
-        return temp
-
-    def prepend(self, value):
-        new_node = Node(value=value)
-        if self.head is None:
-            self.head = new_node
-            self.tail = new_node
-        else:
-            new_node.next = self.head
-            self.head = new_node
-        self.length += 1
-        return True
-
-    def pop_first(self):
-        if self.head is None:
-            return None
-        temp = self.head
-        self.head = self.head.next
-        temp.next = None
-        self.length -= 1
-        if self.length == 0:
-            self.tail = None
-        return temp
-
-    def get(self, index: int):
-        if index < 0 or index >= self.length:
-            return None
-        temp = self.head
-        for _ in range(index):
-            temp = temp.next
-        return temp
-
-    def set_value(self, index: int, value):
-        temp = self.get(index)
-        if temp:
-            temp.value = value
-            return True
-        return False
-
-    def insert(self, index: int, value):
-        if index < 0 or index >= self.length:
-            return False
-        if index == 0:
-            return self.prepend(value)
-        if index == self.length:
-            return self.append(value)
-        prev = self.get(index - 1)
-        temp = prev.next
-        prev.next = Node(value=value, next=temp)
-        self.length += 1
-        return True
-
-    def remove(self, index: int):
-        if index < 0 or index >= self.length:
-            return None
-        if index == 0:
-            return self.pop_first()
-        if index == self.length - 1:
-            return self.pop()
-
-        prev = self.get(index - 1)
-        temp = prev.next
-        prev.next = prev.next.next
-        temp.next = None
-        self.length -= 1
-
-    def find_middle_node(self):
-        pass
+        return slow
 
 
 if __name__ == "__main__":
-    ll = LinkedList(0)
-    for i in range(1, 4):
+    ll = LinkedList(1)
+    for i in range(2, 6):
         ll.append(i)
-    ll.remove(2)
 
+    print(ll.find_middle_node().value)
     ll.print()
