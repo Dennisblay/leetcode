@@ -121,22 +121,66 @@ class LinkedList:
         temp.next = None
         self.length -= 1
 
+    def reverse(self):
+        current = self.head
+        self.head = self.tail
+        self.tail = current
+        after = current.next
+        before = None
+        for _ in range(self.length):
+            after = current.next
+            current.next = before
+            before = current
+            current = after
+
     def find_middle_node(self) -> Optional['Node']:
         if self.head is None:
             return None
         slow = self.head
         fast = self.head
+        # To not use the length property
         while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
 
         return slow
 
+    def has_loop(self) -> bool:
+        # Floyd's circular finding algorithm (the Tortoise and the Hare algorithm)
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next  # one step
+            fast = fast.next.next  # two steps
+            if slow == fast:
+                return True
+        return False
+
+
+    def partition_list(self):
+        temp = self.head
+
+
+def find_kth_from_end(ll: LinkedList, k: int) -> Optional['Node']:
+    slow = fast = ll.head
+    for _ in range(k):  # move fast ahead by k
+        if fast is None:
+            return None  # if k < ll length
+        fast = fast.next
+
+    while fast is not None:
+        slow = slow.next
+        fast = fast.next
+
+    return slow
+
+
 
 if __name__ == "__main__":
-    ll = LinkedList(0)
-    for i in range(1, 4):
+    ll = LinkedList(1)
+    for i in range(2, 11):
         ll.append(i)
-    ll.remove(2)
 
+    fast = find_kth_from_end(ll, 3)
+    print(fast.value)
     ll.print()
